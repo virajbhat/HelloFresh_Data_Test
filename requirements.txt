@@ -1,0 +1,5 @@
+numpy
+pandas
+geopy
+meteostat
+requests

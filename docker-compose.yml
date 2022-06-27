@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  frontend:
+    build: .
+    environment:
+      - BOXES_INPUT=/data/inputfiles/Boxes.csv
+      - TEMPERATURE_INPUT=/data/inputfiles/Temperature_bands.csv
+      - RESULT_OUTPUT=/data/outputfiles/result.csv
+    volumes:
+      - type: bind
+        source: C:/HelloFresh_Data_Test
+        target: /data
