@@ -86,8 +86,7 @@ if __name__ == "__main__":
 
     boxes_df['delivery_date'] = pd.to_datetime(boxes_df['delivery_date'])
 
-    boxes_df['corrected Postcode'] = boxes_df['postcode'].apply(
-        postcode_corrector)
+    boxes_df['corrected Postcode'] = boxes_df['postcode'].apply(postcode_corrector)
 
     boxes_df['Latitude'], boxes_df['Longitude'] = zip(*boxes_df['corrected Postcode'].apply(geocoder))
 
@@ -99,20 +98,16 @@ if __name__ == "__main__":
     boxes3_df = boxes2_df[['box_id', 'delivery_date', 'Box Size',
                            'postcode', 'Delivery_day_Temperature', 'Cool Pouch Size']]
 
-    boxes3_df['Delivery_day_Temperature_adj'] = boxes3_df['Delivery_day_Temperature'].replace(
-        {'None': np.nan, 'geocode missing': np.nan})
+    boxes3_df['Delivery_day_Temperature_adj'] = boxes3_df['Delivery_day_Temperature'].replace({'None': np.nan, 'geocode missing': np.nan})
 
-    func = boxes3_df.fillna(np.nan).groupby('delivery_date').agg('mean')[
-        'Delivery_day_Temperature_adj']
+    func = boxes3_df.fillna(np.nan).groupby('delivery_date').agg('mean')['Delivery_day_Temperature_adj']
 
     boxes3_df['Delivery_day_Temperature_adj'] = boxes3_df[['delivery_date', 'Delivery_day_Temperature_adj']].apply(
         lambda x: func[x['delivery_date']] if np.isnan(x['Delivery_day_Temperature_adj']) else x['Delivery_day_Temperature_adj'], axis=1)
 
-    boxes3_df['Delivery_day_Temperature_adj'] = boxes3_df['Delivery_day_Temperature_adj'].round(
-        decimals=1)
+    boxes3_df['Delivery_day_Temperature_adj'] = boxes3_df['Delivery_day_Temperature_adj'].round(decimals=1)
 
-    boxes3_df['Temperature_band'] = boxes3_df['Delivery_day_Temperature_adj'].apply(
-        bandfinder)
+    boxes3_df['Temperature_band'] = boxes3_df['Delivery_day_Temperature_adj'].apply(bandfinder)
 
     boxes3_df['Cool_Pouches_Needed'] = ''
 
