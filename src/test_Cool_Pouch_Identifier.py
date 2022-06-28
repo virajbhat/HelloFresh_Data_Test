@@ -16,6 +16,11 @@ class test_cool_pouch(unittest.TestCase):
         expected = ('51.56643', '-0.19724')
         self.assertEqual(actual,expected)
 
+    def test_geocoder_fail(self):
+        actual = geocoder('NW118NP')
+        expected = ('Not found', 'Not found')
+        self.assertEqual(actual,expected)
+
     def test_temperature_fetcher(self):
         Latitude = 53.35197
         Longitude = -2.98643
